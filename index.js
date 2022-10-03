@@ -1,13 +1,23 @@
 // Elements
 const cityForm = document.querySelector("#city-form");
 const inputText = document.querySelector("#input-text");
+const homeBanner = document.querySelector("#home-banner");
 // select city menu has id (#city-menu)
 
 cityForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   if (Number(inputText.value)) {
-    getWeatherByZip(inputText.value).then((data) => console.log(data));
+    // ZipCode submitted
+    let cityData = {};
+    getWeatherByZip(inputText.value).then((data) => {
+      console.log("data: ", data);
+      cityData = data;
+      // => stopped here: homeBanner.styles.visibility = 'hidden'
+    });
+    console.log("cityData: ", cityData);
+
+    // City Name submitted
   } else if (!document.querySelector("#city-menu")) {
     getWeatherByCity(inputText.value).then((data) => {
       console.log(data);
