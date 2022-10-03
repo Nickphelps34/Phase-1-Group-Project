@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#city-form {
+  border: 2px solid #222;
+}
+
+#home-banner {
+  border: 2px solid #222;
+}
+
+#city-page {
+  border: 2px solid #222;
+  visibility: hidden;
+  /* hidden until form submit 
+    change style of visibility via 
+    form submit event */
+}
