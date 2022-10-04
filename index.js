@@ -1,3 +1,5 @@
+// 10/4 weatherScrolling() function progress. Continue tomorrow
+
 let cityData = {};
 let stateArray = [];
 
@@ -73,42 +75,31 @@ cityForm.addEventListener("submit", (e) => {
         dropDownListener(dropDown);
       }
     });
-    //=======================  PROJECT PAUSE  ===================================
-
-    //  need to get final 'else' to call cityStateSubmit if possible. Otherwise need
-    // to figure out another way to call a second submit with different code on the
-    // same form element.
   } else {
     console.log("are you here?");
     cityStateSubmit();
   }
-  // Listen for change in select menu. Turns out the selected item is located deep in the
-  // event object, under target.options.selectedIndex!
   function dropDownListener(selectMenu) {
-    console.log("stateArray: ", stateArray); // => Array of states listed in select menu
+    console.log("stateArray: ", stateArray);
 
-    selectMenu.addEventListener(
-      "change",
-      (e) => {
-        const stateArrayIndex = e.target.options.selectedIndex - 1;
-        const selectedState = stateArray[stateArrayIndex];
+    selectMenu.addEventListener("change", (e) => {
+      console.log(e);
+      const stateArrayIndex = e.target.options.selectedIndex - 1;
+      const selectedState = stateArray[stateArrayIndex];
 
-        for (let city of cityData) {
-          if (city.state === selectedState) cityData = city;
-        }
-        console.log("heres your city: ", cityData);
-        console.log("cityData.lat: ", cityData.lat);
-
-        getWeatherByLat(cityData.lat, cityData.lon).then((data) => {
-          console.log("city ", data);
-          console.log("cityData: ", cityData);
-          cityData = data;
-          renderData();
-        });
-        //renderData();
+      for (let city of cityData) {
+        if (city.state === selectedState) cityData = city;
       }
-      // make sure to convert selected city to global cityData
-    );
+      console.log("heres your city: ", cityData);
+      console.log("cityData.lat: ", cityData.lat);
+
+      getWeatherByLat(cityData.lat, cityData.lon).then((data) => {
+        console.log("city ", data);
+        console.log("cityData: ", cityData);
+        cityData = data;
+        renderData();
+      });
+    });
   }
 
   function cityStateSubmit() {
@@ -136,20 +127,24 @@ function renderData() {
 //
 function weatherScrolling() {
   console.log("weatherScrolling running");
+  generateFeelsLikeFact();
   document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") {
-      if (!weatherFactsContainer.hasChildNodes()) {
-        console.log(e.key);
-        generateFeelsLikeFact();
-      }
-    }
-    if (e.key === "ArrowLeft") {
-      if (!weatherFactsContainer.hasChildNodes()) {
-        console.log(e.key);
-
-        generateFeelsLikeFact();
-      }
-    }
+    // adding ifs for functions 'generate${Different}Facts'
+    // Feels like data renders on form submit, then keydowns to toggle between data
+    //========= SCRAP CODE BELOW =================
+    //     if (e.key === "ArrowRight") {
+    //       if (!weatherFactsContainer.hasChildNodes()) {
+    //         console.log(e.key);
+    //         generateFeelsLikeFact();
+    //       }
+    //     }
+    //     if (e.key === "ArrowLeft") {
+    //       if (!weatherFactsContainer.hasChildNodes()) {
+    //         console.log(e.key);
+    //         generateFeelsLikeFact();
+    //       }
+    //     }
+    //===========================================
   });
 }
 
@@ -160,14 +155,22 @@ function generateFeelsLikeFact() {
   const weatherFactName = document.createElement("h2");
   const weatherFactDetail = document.createElement("h3");
 
-  weatherFactName.id = "weather-fact-name";
-  weatherFactDetail.id = "weather-fact-detail";
+  weatherFactName.id = "feels-like-fact-name";
+  weatherFactDetail.id = "feels-like-fact-detail";
 
   weatherFactName.textContent = "Currently Feels Like:";
   weatherFactDetail.textContent = cityData.main.feels_like;
 
   weatherFactsContainer.appendChild(weatherFactName);
   weatherFactsContainer.appendChild(weatherFactDetail);
+}
+
+function generateWindSpeedFact() {
+  console.log("wind speed");
+}
+
+function generateHumidityFact() {
+  console.log("humidity");
 }
 //============================================================================
 
