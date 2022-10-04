@@ -10,12 +10,12 @@
   </head>
   <body>
     <div id="top-bar">
-      <h2 id="weather-text">Weather</h2>
+      <h2 id="weather-text">WeatherNow</h2>
       <form action="" id="city-form">
         <input
           type="text"
-          placeholder="Enter your zip!"
-          size="30"
+          placeholder="Enter your zip! (Or, in the future, your city!)"
+          size="50"
           id="input-text"
         />
         <input type="submit" name="" id="submit-button" />
@@ -25,9 +25,31 @@
       <h1>Get your local weather!</h1>
     </div>
     <div id="city-page">
-      <div id="city-banner">
-        <h2 id="city-name"></h2>
+      <div id="city-banner"></div>
+      <div id="city-name-container">
+        <h2 id="city-name">City Name</h2>
       </div>
+      <div id="city-temps">
+        <div class="temps">
+          <h3>Low</h3>
+          <h2 id="daily-low"></h2>
+        </div>
+        <div class="temps">
+          <h3>Current</h3>
+          <h2 id="current-temp"></h2>
+        </div>
+        <div class="temps">
+          <h3>High</h3>
+          <h2 id="daily-high"></h2>
+        </div>
+      </div>
+      <h2 id="humidity"></h2>
+
+      <h2 id="wind-speed"></h2>
+      <div id="weather-facts-instructions">
+        <h3>Press ⬅️ or ➡️ to scroll through your city's weather facts!</h3>
+      </div>
+      <div id="weather-facts"></div>
     </div>
   </body>
 </html>
