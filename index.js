@@ -1,6 +1,8 @@
 // 10/5 After initial search and city screen render, cannot complete search
 // using city/state from that city screen. Error 'wrong latitude'
 
+// After searching by city, if only 1 city is returned
+
 let cityData = {};
 let stateArray = [];
 
@@ -93,18 +95,11 @@ cityForm.addEventListener("submit", (e) => {
           dropDown.appendChild(option);
         });
 
-        // Figure out how to temporarily remove submit button
-        // When dropdownListener fires, we need submit button back
-        // and select menu to be removed entirely
-        // submit button style display: none
-        // select menu erased => .remove()
-
         dropDownListener(dropDown);
-      }
+      } else console.log("one city returned");
     });
   } else {
-    console.log("are you here?");
-    cityStateSubmit();
+    console.log("You shouldnt be here");
   }
   function dropDownListener(selectMenu) {
     console.log("stateArray: ", stateArray);
@@ -133,16 +128,29 @@ cityForm.addEventListener("submit", (e) => {
         console.log("cityData: ", cityData);
         cityData = data;
         renderData();
+
+        //Change city banner based on weather
+        const weatherStatus = cityData.weather[0].main;
+        console.log(cityData.weather);
+        console.log("city: ", cityData.name);
+        console.log("weatherStatus: ", weatherStatus);
+        if (weatherStatus === "Clouds") {
+          console.log("clouds banner");
+          cityBanner.classList = "clouds";
+        } else if (weatherStatus === "Rain") {
+          console.log("rain banner");
+          cityBanner.classList = "rain";
+        } else if (weatherStatus === "Mist") {
+          console.log("mist banner");
+          cityBanner.classList = "mist";
+        } else if (weatherStatus === "Clear") {
+          console.log("clear banner");
+          cityBanner.classList = "clear";
+        } else if (weatherStatus === "Snow") {
+          console.log("snow banner");
+          cityBanner.classList = "snow";
+        }
       });
-    });
-  }
-
-  function cityStateSubmit() {
-    cityForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const dropDown = document.querySelector("#city-input");
-      console.log("worked!"), console.log("city-input: ", dropDown.value);
     });
   }
 });
