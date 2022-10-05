@@ -1,4 +1,7 @@
-// 10/4 weatherScrolling() function progress. Continue tomorrow
+// 10/5 After initial search and city screen render, cannot complete search
+// using city/state from that city screen. Error 'wrong latitude'
+
+// After searching by city, if only 1 city is returned
 
 let cityData = {};
 let stateArray = [];
@@ -8,8 +11,10 @@ const cityForm = document.querySelector("#city-form");
 const inputText = document.querySelector("#input-text");
 const homeBanner = document.querySelector("#home-banner");
 const cityPage = document.querySelector("#city-page");
+const citySubmit = document.querySelector("#submit-button");
 
 // City page elements
+const cityBanner = document.querySelector("#city-banner");
 const cityName = document.querySelector("#city-name");
 const currentTemp = document.querySelector("#current-temp");
 const humidity = document.querySelector("#humidity");
@@ -33,12 +38,34 @@ cityForm.addEventListener("submit", (e) => {
     getWeatherByZip(inputText.value).then((data) => {
       console.log("data: ", data);
       cityData = data;
-      // 10/3 => stopped here: homeBanner.styles.visibility = 'hidden'
-      // ==== GET IMAGES FOR CITY.WEATHER[0].MAIN (3 + DEFAULT TO START)
-      // Later, wrap in separate function and call on both fetch by
-      // zip and fetch by city/state
+      inputText.value = "";
+
+      //Collapse home banner and display city details
       homeBanner.style.display = "none";
       cityPage.style.display = "block";
+
+      //Change city banner based on weather
+      const weatherStatus = cityData.weather[0].main;
+      console.log(cityData.weather);
+      console.log("city: ", cityData.name);
+      console.log("weatherStatus: ", weatherStatus);
+      if (weatherStatus === "Clouds") {
+        console.log("clouds banner");
+        cityBanner.classList = "clouds";
+      } else if (weatherStatus === "Rain") {
+        console.log("rain banner");
+        cityBanner.classList = "rain";
+      } else if (weatherStatus === "Mist") {
+        console.log("mist banner");
+        cityBanner.classList = "mist";
+      } else if (weatherStatus === "Clear") {
+        console.log("clear banner");
+        cityBanner.classList = "clear";
+      } else if (weatherStatus === "Snow") {
+        console.log("snow banner");
+        cityBanner.classList = "snow";
+      }
+
       renderData();
     });
 
@@ -49,6 +76,8 @@ cityForm.addEventListener("submit", (e) => {
       cityData = data;
 
       if (data.length > 1) {
+        citySubmit.style.display = "none";
+
         const dropDown = document.createElement("select");
         const firstOption = document.createElement("option");
 
@@ -66,18 +95,11 @@ cityForm.addEventListener("submit", (e) => {
           dropDown.appendChild(option);
         });
 
-        // Figure out how to temporarily remove submit button
-        // When dropdownListener fires, we need submit button back
-        // and select menu to be removed entirely
-        // submit button style display: none
-        // select menu erased => .remove()
-
         dropDownListener(dropDown);
-      }
+      } else console.log("one city returned");
     });
   } else {
-    console.log("are you here?");
-    cityStateSubmit();
+    console.log("You shouldnt be here");
   }
   function dropDownListener(selectMenu) {
     console.log("stateArray: ", stateArray);
@@ -90,6 +112,14 @@ cityForm.addEventListener("submit", (e) => {
       for (let city of cityData) {
         if (city.state === selectedState) cityData = city;
       }
+
+      // Collapses home banner and displays city page
+      homeBanner.style.display = "none";
+      cityPage.style.display = "block";
+      citySubmit.style.display = "inline";
+      inputText.value = "";
+      selectMenu.remove();
+
       console.log("heres your city: ", cityData);
       console.log("cityData.lat: ", cityData.lat);
 
@@ -98,16 +128,29 @@ cityForm.addEventListener("submit", (e) => {
         console.log("cityData: ", cityData);
         cityData = data;
         renderData();
+
+        //Change city banner based on weather
+        const weatherStatus = cityData.weather[0].main;
+        console.log(cityData.weather);
+        console.log("city: ", cityData.name);
+        console.log("weatherStatus: ", weatherStatus);
+        if (weatherStatus === "Clouds") {
+          console.log("clouds banner");
+          cityBanner.classList = "clouds";
+        } else if (weatherStatus === "Rain") {
+          console.log("rain banner");
+          cityBanner.classList = "rain";
+        } else if (weatherStatus === "Mist") {
+          console.log("mist banner");
+          cityBanner.classList = "mist";
+        } else if (weatherStatus === "Clear") {
+          console.log("clear banner");
+          cityBanner.classList = "clear";
+        } else if (weatherStatus === "Snow") {
+          console.log("snow banner");
+          cityBanner.classList = "snow";
+        }
       });
-    });
-  }
-
-  function cityStateSubmit() {
-    cityForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const dropDown = document.querySelector("#city-input");
-      console.log("worked!"), console.log("city-input: ", dropDown.value);
     });
   }
 });
@@ -117,8 +160,6 @@ function renderData() {
   currentTemp.textContent = `${cityData.main.temp}°`;
   dailyHigh.textContent = `${cityData.main.temp_max}°`;
   dailyLow.textContent = `${cityData.main.temp_min}°`;
-  windSpeed.textContent = `Wind Speed: ${cityData.wind.speed}mph`;
-  humidity.textContent = `Humidity: ${cityData.main.humidity}%`;
 
   weatherScrolling();
 }
@@ -127,29 +168,43 @@ function renderData() {
 //
 function weatherScrolling() {
   console.log("weatherScrolling running");
-  generateFeelsLikeFact();
+  console.log(cityData);
+
+  if (!weatherFactsContainer.hasChildNodes()) {
+    generateFeelsLikeFact();
+  }
+
   document.addEventListener("keydown", (e) => {
     // adding ifs for functions 'generate${Different}Facts'
     // Feels like data renders on form submit, then keydowns to toggle between data
-    //========= SCRAP CODE BELOW =================
-    //     if (e.key === "ArrowRight") {
-    //       if (!weatherFactsContainer.hasChildNodes()) {
-    //         console.log(e.key);
-    //         generateFeelsLikeFact();
-    //       }
-    //     }
-    //     if (e.key === "ArrowLeft") {
-    //       if (!weatherFactsContainer.hasChildNodes()) {
-    //         console.log(e.key);
-    //         generateFeelsLikeFact();
-    //       }
-    //     }
-    //===========================================
+    if (e.key === "ArrowRight") {
+      console.log("ArrowRight");
+      if (document.querySelector("#feels-like-fact-name")) {
+        generateHumidityFact();
+      } else if (document.querySelector("#humidity-fact-name")) {
+        generateWindSpeedFact();
+      } else if (document.querySelector("#wind-speed-fact-name")) {
+        generateFeelsLikeFact();
+      }
+    }
+    if (e.key === "ArrowLeft") {
+      console.log("ArrowLeft");
+      if (document.querySelector("#feels-like-fact-name")) {
+        generateWindSpeedFact();
+      } else if (document.querySelector("#humidity-fact-name")) {
+        generateFeelsLikeFact();
+      } else if (document.querySelector("#wind-speed-fact-name")) {
+        generateHumidityFact();
+      }
+    }
   });
 }
 
 function generateFeelsLikeFact() {
-  console.log("first weather fact generated");
+  console.log("feels like");
+  if (weatherFactsContainer.hasChildNodes()) {
+    weatherFactsContainer.innerHTML = "";
+  }
   // add class to first weatherFact and to subsequent facts
   // for similar css styling
   const weatherFactName = document.createElement("h2");
@@ -167,10 +222,42 @@ function generateFeelsLikeFact() {
 
 function generateWindSpeedFact() {
   console.log("wind speed");
+  if (weatherFactsContainer.hasChildNodes()) {
+    weatherFactsContainer.innerHTML = "";
+  }
+  // add class to first weatherFact and to subsequent facts
+  // for similar css styling
+  const weatherFactName = document.createElement("h2");
+  const weatherFactDetail = document.createElement("h3");
+
+  weatherFactName.id = "wind-speed-fact-name";
+  weatherFactDetail.id = "wind-speed-fact-detail";
+
+  weatherFactName.textContent = "Wind Speed:";
+  weatherFactDetail.textContent = cityData.wind.speed;
+
+  weatherFactsContainer.appendChild(weatherFactName);
+  weatherFactsContainer.appendChild(weatherFactDetail);
 }
 
 function generateHumidityFact() {
   console.log("humidity");
+  if (weatherFactsContainer.hasChildNodes()) {
+    weatherFactsContainer.innerHTML = "";
+  }
+  // add class to first weatherFact and to subsequent facts
+  // for similar css styling
+  const weatherFactName = document.createElement("h2");
+  const weatherFactDetail = document.createElement("h3");
+
+  weatherFactName.id = "humidity-fact-name";
+  weatherFactDetail.id = "humidity-fact-detail";
+
+  weatherFactName.textContent = "% Humidity:";
+  weatherFactDetail.textContent = cityData.main.humidity;
+
+  weatherFactsContainer.appendChild(weatherFactName);
+  weatherFactsContainer.appendChild(weatherFactDetail);
 }
 //============================================================================
 
