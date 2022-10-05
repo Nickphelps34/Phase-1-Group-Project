@@ -49,21 +49,27 @@ cityForm.addEventListener("submit", (e) => {
       console.log(cityData.weather);
       console.log("city: ", cityData.name);
       console.log("weatherStatus: ", weatherStatus);
+
       if (weatherStatus === "Clouds") {
         console.log("clouds banner");
         cityBanner.classList = "clouds";
+        cityBanner.textContent = "Cloudy";
       } else if (weatherStatus === "Rain") {
         console.log("rain banner");
         cityBanner.classList = "rain";
+        cityBanner.textContent = "Rain";
       } else if (weatherStatus === "Mist") {
         console.log("mist banner");
         cityBanner.classList = "mist";
+        cityBanner.textContent = "Misty";
       } else if (weatherStatus === "Clear") {
         console.log("clear banner");
         cityBanner.classList = "clear";
+        cityBanner.textContent = "Clear";
       } else if (weatherStatus === "Snow") {
         console.log("snow banner");
         cityBanner.classList = "snow";
+        cityBanner.textContent = "Snow";
       }
 
       renderData();
@@ -105,12 +111,18 @@ cityForm.addEventListener("submit", (e) => {
     console.log("stateArray: ", stateArray);
 
     selectMenu.addEventListener("change", (e) => {
-      console.log(e);
+      console.log("lisening to change event");
       const stateArrayIndex = e.target.options.selectedIndex - 1;
       const selectedState = stateArray[stateArrayIndex];
 
       for (let city of cityData) {
-        if (city.state === selectedState) cityData = city;
+        console.log("Just outside of for loop");
+        if (city.state === selectedState) {
+          console.log("city.state", city.state);
+          console.log("selectedState", selectedState);
+          cityData = city;
+        }
+        console.log("cityData after for loop: ", cityData);
       }
 
       // Collapses home banner and displays city page
@@ -123,44 +135,57 @@ cityForm.addEventListener("submit", (e) => {
       console.log("heres your city: ", cityData);
       console.log("cityData.lat: ", cityData.lat);
 
-      getWeatherByLat(cityData.lat, cityData.lon).then((data) => {
-        console.log("city ", data);
-        console.log("cityData: ", cityData);
-        cityData = data;
-        renderData();
+      getWeatherByLat(cityData.lat.toFixed(6), cityData.lon.toFixed(6)).then(
+        (data) => {
+          console.log("city ", data);
+          console.log("cityData: ", cityData);
+          const actualCity = cityData.name;
+          console.log("actualCity: ", actualCity);
+          cityData = data;
+          renderData(actualCity);
 
-        //Change city banner based on weather
-        const weatherStatus = cityData.weather[0].main;
-        console.log(cityData.weather);
-        console.log("city: ", cityData.name);
-        console.log("weatherStatus: ", weatherStatus);
-        if (weatherStatus === "Clouds") {
-          console.log("clouds banner");
-          cityBanner.classList = "clouds";
-        } else if (weatherStatus === "Rain") {
-          console.log("rain banner");
-          cityBanner.classList = "rain";
-        } else if (weatherStatus === "Mist") {
-          console.log("mist banner");
-          cityBanner.classList = "mist";
-        } else if (weatherStatus === "Clear") {
-          console.log("clear banner");
-          cityBanner.classList = "clear";
-        } else if (weatherStatus === "Snow") {
-          console.log("snow banner");
-          cityBanner.classList = "snow";
+          //Change city banner based on weather
+          const weatherStatus = cityData.weather[0].main;
+          console.log(cityData.weather);
+          console.log("city: ", cityData.name);
+          console.log("weatherStatus: ", weatherStatus);
+
+          if (weatherStatus === "Clouds") {
+            console.log("clouds banner");
+            cityBanner.classList = "clouds";
+            cityBanner.textContent = "Cloudy";
+          } else if (weatherStatus === "Rain") {
+            console.log("rain banner");
+            cityBanner.classList = "rain";
+            cityBanner.textContent = "Rain";
+          } else if (weatherStatus === "Mist") {
+            console.log("mist banner");
+            cityBanner.classList = "mist";
+            cityBanner.textContent = "Misty";
+          } else if (weatherStatus === "Clear") {
+            console.log("clear banner");
+            cityBanner.classList = "clear";
+            cityBanner.textContent = "Clear";
+          } else if (weatherStatus === "Snow") {
+            console.log("snow banner");
+            cityBanner.classList = "snow";
+            cityBanner.textContent = "Snow";
+          }
         }
-      });
+      );
     });
   }
 });
 
-function renderData() {
-  cityName.textContent = cityData.name;
-  currentTemp.textContent = `${cityData.main.temp}°`;
-  dailyHigh.textContent = `${cityData.main.temp_max}°`;
-  dailyLow.textContent = `${cityData.main.temp_min}°`;
-
+function renderData(optionalCityName) {
+  currentTemp.textContent = `${cityData.main.temp.toFixed(0)}°`;
+  dailyHigh.textContent = `${cityData.main.temp_max.toFixed(0)}°`;
+  dailyLow.textContent = `${cityData.main.temp_min.toFixed(0)}°`;
+  console.log("cityData.name: ", cityData.name);
+  console.log("optionalCityName: ", optionalCityName);
+  if (cityData.name !== optionalCityName) {
+    cityName.textContent = optionalCityName;
+  } else cityName.textContent = cityData.name;
   weatherScrolling();
 }
 
@@ -214,7 +239,7 @@ function generateFeelsLikeFact() {
   weatherFactDetail.id = "feels-like-fact-detail";
 
   weatherFactName.textContent = "Currently Feels Like:";
-  weatherFactDetail.textContent = cityData.main.feels_like;
+  weatherFactDetail.textContent = `${cityData.main.feels_like.toFixed(0)}°`;
 
   weatherFactsContainer.appendChild(weatherFactName);
   weatherFactsContainer.appendChild(weatherFactDetail);
@@ -234,7 +259,7 @@ function generateWindSpeedFact() {
   weatherFactDetail.id = "wind-speed-fact-detail";
 
   weatherFactName.textContent = "Wind Speed:";
-  weatherFactDetail.textContent = cityData.wind.speed;
+  weatherFactDetail.textContent = `${cityData.wind.speed.toFixed(0)}mph`;
 
   weatherFactsContainer.appendChild(weatherFactName);
   weatherFactsContainer.appendChild(weatherFactDetail);
@@ -262,7 +287,7 @@ function generateHumidityFact() {
 //============================================================================
 
 const getWeatherByCity = (city) => {
-  const apiByCity = `http://api.openweathermap.org/geo/1.0/direct?q=${city},&limit=5&appid=ac4519ef112c6f4cc9a4b2e01e44fe76&units=imperial`;
+  const apiByCity = `http://api.openweathermap.org/geo/1.0/direct?q=${city},US,&limit=5&appid=ac4519ef112c6f4cc9a4b2e01e44fe76&units=imperial`;
   return fetch(apiByCity)
     .then((res) => res.json())
     .then((data) => data);
