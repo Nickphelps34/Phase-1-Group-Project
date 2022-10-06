@@ -31,6 +31,24 @@ body {
   font-style: italic;
 }
 
+.night-button {
+  font-size: 3rem;
+  border: none;
+  width: 5rem;
+  background-color: var(--top-bar-color));
+  border-radius: 100px;
+  margin: 0.5rem;
+}
+
+.day-button {
+  /* switch with javascript */
+  font-size: 3rem;
+  border: none;
+  width: 5rem;
+  border-radius: 100px;
+  margin: 0.5rem;
+  background-color: var(--top-bar-color);
+}
 /*=======  FORM STYLES ===========================*/
 #city-form {
   padding: 1rem 5rem 1rem 0;
@@ -61,6 +79,9 @@ body {
   padding: 0.5rem 0.8rem;
   border-radius: 8px;
   outline: none;
+  border: none;
+  background-color: var(--tertiary-bg-color);
+  color: var(--top-bar-color);
 }
 /*======================================================*/
 #home-banner {
@@ -265,6 +286,56 @@ body {
 
 .snow {
   background-image: url("./images/snow-banner.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.clear-night {
+    background-image: url("./images/night-mode/clear-night-banner.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 5rem;
+  font-style: italic;
+  font-family: cursive;
+  font-weight: bolder;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 10px rgb(73, 73, 73);
+  padding-right: 3rem;
+}
+.mist-night {background-image: url("./images/night-mode/mist-night-banner.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-size: 5rem;
+    font-style: italic;
+    font-family: cursive;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 10px rgb(73, 73, 73);
+    padding-right: 3rem;}
+.clouds-night {
+    background-image: url("./images/clouds-night-banner2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 5rem;
+  font-style: italic;
+  font-family: cursive;
+  font-weight: bolder;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 10px rgb(73, 73, 73);
+  padding-right: 3rem;
+}
+.rain-night {background-image: url("./images/rain-night-banner.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-size: 5rem;
+    font-style: italic;
+    font-family: cursive;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 10px rgb(73, 73, 73);
+    padding-right: 3rem;}
+.snow-night {
+    background-image: url("./images/snow-banner.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
