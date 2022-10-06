@@ -46,6 +46,7 @@ nightModeButton.addEventListener("click", (e) => {
     topBar.className = "top-bar-night";
     weatherText.className = "weather-text-night";
     homeBanner.className = "home-banner-night";
+    cityPage.className = "city-page-night";
     //cityBanner.className = "city-banner-night";
     if (cityBanner.className === "clear") {
       cityBanner.classList = "clear-night";
@@ -70,6 +71,7 @@ nightModeButton.addEventListener("click", (e) => {
     topBar.className = "top-bar-day";
     weatherText.className = "weather-text-day";
     homeBanner.className = "home-banner-day";
+    cityPage.className = "city-page-day";
     if (cityBanner.className === "clear-night") {
       cityBanner.classList = "clear";
     }
