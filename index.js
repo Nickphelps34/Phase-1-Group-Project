@@ -183,9 +183,10 @@ function renderData(optionalCityName) {
   dailyLow.textContent = `${cityData.main.temp_min.toFixed(0)}°`;
   console.log("cityData.name: ", cityData.name);
   console.log("optionalCityName: ", optionalCityName);
-  if (cityData.name !== optionalCityName) {
+  if (cityData.name !== optionalCityName && optionalCityName !== undefined) {
     cityName.textContent = optionalCityName;
   } else cityName.textContent = cityData.name;
+  stateArray = [];
   weatherScrolling();
 }
 
