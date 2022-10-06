@@ -10,6 +10,8 @@ let cityData = {};
 let stateArray = [];
 
 // Elements
+const topBar = document.querySelector("#top-bar");
+const weatherText = document.querySelector("#weather-text");
 const cityForm = document.querySelector("#city-form");
 const inputText = document.querySelector("#input-text");
 const homeBanner = document.querySelector("#home-banner");
@@ -36,12 +38,53 @@ const nightModeButton = document.querySelector("#night-button");
 // Day/Night mode button listener
 nightModeButton.addEventListener("click", (e) => {
   console.log("clicked");
+
+  // Day to Night
   if (nightModeButton.innerHTML !== '<i class="fa-regular fa-sun"></i>') {
     nightModeButton.innerHTML = '<i class="fa-regular fa-sun"></i>';
     nightModeButton.className = "day-button";
+    topBar.className = "top-bar-night";
+    weatherText.className = "weather-text-night";
+    homeBanner.className = "home-banner-night";
+    //cityBanner.className = "city-banner-night";
+    if (cityBanner.className === "clear") {
+      cityBanner.classList = "clear-night";
+    }
+    if (cityBanner.className === "clouds") {
+      cityBanner.classList = "clouds-night";
+    }
+    if (cityBanner.className === "rain") {
+      cityBanner.classList = "rain-night";
+    }
+    if (cityBanner.className === "mist") {
+      cityBanner.classList = "mist-night";
+    }
+    if (cityBanner.className === "snow") {
+      cityBanner.classList = "snow-night";
+    }
+
+    // Night to Day
   } else {
     nightModeButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
     nightModeButton.className = "night-button";
+    topBar.className = "top-bar-day";
+    weatherText.className = "weather-text-day";
+    homeBanner.className = "home-banner-day";
+    if (cityBanner.className === "clear-night") {
+      cityBanner.classList = "clear";
+    }
+    if (cityBanner.className === "clouds-night") {
+      cityBanner.className = "clouds";
+    }
+    if (cityBanner.className === "rain-night") {
+      cityBanner.className = "rain";
+    }
+    if (cityBanner.className === "mist-night") {
+      cityBanner.className = "mist";
+    }
+    if (cityBanner.className === "snow-night") {
+      cityBanner.className = "snow";
+    }
   }
 });
 //==================================================
@@ -67,6 +110,32 @@ cityForm.addEventListener("submit", (e) => {
       console.log("city: ", cityData.name);
       console.log("weatherStatus: ", weatherStatus);
 
+      //======  VERSION IN PROGRESS. WORKING CODE BELOW  ============
+
+      //   if (weatherStatus === "Clouds") {
+      //     console.log("clouds banner");
+      //     if (cityBanner.className === "city-banner-day") {
+      //       cityBanner.classList.add = "clouds";
+      //     } else cityBanner.classList = "city-banner-night clouds-night";
+      //     cityBanner.textContent = "Cloudy";
+      //   } else if (weatherStatus === "Rain") {
+      //     console.log("rain banner");
+      //     cityBanner.classList = "rain";
+      //     cityBanner.textContent = "Rain";
+      //   } else if (weatherStatus === "Mist") {
+      //     console.log("mist banner");
+      //     cityBanner.classList = "mist";
+      //     cityBanner.textContent = "Misty";
+      //   } else if (weatherStatus === "Clear") {
+      //     console.log("clear banner");
+      //     cityBanner.classList = "clear";
+      //     cityBanner.textContent = "Clear";
+      //   } else if (weatherStatus === "Snow") {
+      //     console.log("snow banner");
+      //     cityBanner.classList = "snow";
+      //     cityBanner.textContent = "Snow";
+      // }
+      //=======  BACKUP CODE ===================
       if (weatherStatus === "Clouds") {
         console.log("clouds banner");
         cityBanner.classList = "clouds";
