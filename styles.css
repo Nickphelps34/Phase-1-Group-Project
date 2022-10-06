@@ -212,7 +212,7 @@ body {
 /*========  CITY BANNER WEATHER CLASSES  ===================*/
 
 .clear {
-  background-image: url("./images/clear-banner.jpg");
+  background-image: url("./images/clear-banner2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 5rem;
@@ -251,7 +251,7 @@ body {
 }
 
 .mist {
-  background-image: url("./images/mist-banner.jpg");
+  background-image: url("./images/mist-banner2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 5rem;
