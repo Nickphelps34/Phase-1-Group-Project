@@ -2,6 +2,9 @@
 // using city/state from that city screen. Error 'wrong latitude'
 
 // After searching by city, if only 1 city is returned
+// THINK ITS FIXED!
+// tomorrow => new pics for clear (maybe with a sun) and daytime rain
+// work on nightmode if there's time and no bugs (big if)
 
 let cityData = {};
 let stateArray = [];
