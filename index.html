@@ -4,50 +4,60 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/090e4ecc64.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="styles.css" />
     <script src="index.js" defer></script>
     <title>Document</title>
   </head>
   <body>
     <div id="top-bar">
+      <button id="night-button" class="night-button">
+        <i class="fa-solid fa-moon"></i>
+      </button>
       <h2 id="weather-text">WeatherNow</h2>
       <form action="" id="city-form">
         <input
           type="text"
-          placeholder="Enter your zip! (Or, in the future, your city!)"
+          placeholder="Enter your city name or zip code!"
           size="50"
           id="input-text"
         />
         <input type="submit" name="" id="submit-button" />
       </form>
     </div>
-    <div id="home-banner">
+    <div id="home-banner" class="home-banner-day">
       <h1>Get your local weather!</h1>
     </div>
-    <div id="city-page">
+    <div id="city-page" class="city-page-day">
       <div id="city-banner"></div>
       <div id="city-name-container">
         <h2 id="city-name">City Name</h2>
       </div>
       <div id="city-temps">
-        <div class="temps">
+        <div class="temps side-temps">
           <h3>Low</h3>
           <h2 id="daily-low"></h2>
         </div>
         <div class="temps">
-          <h3>Current</h3>
-          <h2 id="current-temp"></h2>
+          <h3 class="current-temp-elements">Current</h3>
+          <h2 id="current-temp" class="current-temp-elements"></h2>
         </div>
-        <div class="temps">
+        <div class="temps side-temps">
           <h3>High</h3>
           <h2 id="daily-high"></h2>
         </div>
       </div>
-
-      <div id="weather-facts-instructions">
-        <h3>Press ⬅️ or ➡️ to scroll through your city's weather facts!</h3>
+      <div id="weather-facts-container">
+        <div id="weather-facts-instructions">
+          <h3>Press ⬅️ or ➡️ to scroll through your city's weather facts!</h3>
+        </div>
+        <div id="weather-facts"></div>
       </div>
-      <div id="weather-facts"></div>
     </div>
   </body>
 </html>
+
+<!-- day icon <script src="https://kit.fontawesome.com/090e4ecc64.js" crossorigin="anonymous"></script>  -->
