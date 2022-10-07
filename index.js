@@ -113,7 +113,7 @@ cityForm.addEventListener("submit", (e) => {
       console.log("weatherStatus: ", weatherStatus);
 
       //======  VERSION IN PROGRESS. WORKING CODE BELOW  ============
-
+      //========  will persist the cityBanner day/night status between searches (defaults to day now)
       //   if (weatherStatus === "Clouds") {
       //     console.log("clouds banner");
       //     if (cityBanner.className === "city-banner-day") {
